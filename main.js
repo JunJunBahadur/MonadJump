@@ -11,9 +11,11 @@ playButton.style.visibility = 'visible';
 board.style.visibility = 'hidden';
 let score = 0;
 let speed = 2000;
-speedMeter.textContent = '1';
+let pause = false;
+speedMeter.textContent = '0';
 
 const sound = new Audio("sprites/smash.mp3");
+
 
 function start(){
     playButton.style.visibility = 'hidden';
@@ -23,17 +25,16 @@ function start(){
 }
 
 function run(){
-
-    let over = true;
-
+    
+    
     const i = Math.floor(Math.random()*holes.length);
     const hole = holes[i];
     let timer = null;
-
+    
     const img = document.createElement('img');
     img.classList.add('mole');
     img.src = 'sprites/benads.jpg';
-
+    
     if(score > 80){
         speed = 800;
         img.style['animation-duration'] = '0.8s';
@@ -53,8 +54,11 @@ function run(){
     }else if(score> 5){
         speed = 1800;
         img.style['animation-duration'] = '1.8s';
-        speedMeter.textContent = '1';
+        speedMeter.textContent = '1';  
+        hole.removeChild(img);
+        gamepause();  
     }
+    
 
     img.addEventListener('click', ()=> {
         score++;
@@ -62,26 +66,31 @@ function run(){
         scoreEl.textContent = score;
         img.src = 'sprites/mole-whacked.png';
         clearTimeout(timer);
-        setTimeout(() => {
-            hole.removeChild(img);
-            run();
-        }, 500);
+        if(!pause){
+            setTimeout(() => {
+                hole.removeChild(img);
+                run();
+            }, 500);
+        }
     })
 
-    hole.appendChild(img);
     
-    console.log(speed);
-    
-    
-    timer = setTimeout(() => {
-        hole.removeChild(img);
-        console.log(over);
-        //gameover();
-        run();
-    },speed);
+    if(!pause){
+        hole.appendChild(img);
+        timer = setTimeout(() => {
+            hole.removeChild(img);
+            //gameover();
+            run();
+        },speed);
+    }
     
 }
 //run()
+
+function gamepause(){
+    board.style.background = 'blue';
+    pause = false;
+}
 
 function gameover(){
     playButton.style.visibility = 'visible';

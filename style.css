@@ -14,8 +14,11 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    cursor: none;
 }
+/*
+cursor: none;
+
+*/
 .score .highscore{
     font-size: 4em;
     margin-bottom: 10px;
@@ -31,7 +34,7 @@ body{
 
 .hole{
     border-radius: 50%;
-    background-color: #8773f9;
+    background-color: #8672f8;
     position: relative;
     overflow: hidden;
 }
@@ -66,20 +69,20 @@ body{
     }
     
 }
-
+/*
 .cursor{
     height: 110px;
     width: 100px;
     position: absolute;
     top: 100px;
     left: 100px;
-    background-image: url(sprites/hammer.png);
+    background-image: url(sprites/bonk4.png);
     background-size: 100% 100%;
     transform: translate(-20%, -20%);
     transition: transform .1s;
     pointer-events: none;
 }
-
+*/
 .cursor.active{
     transform: translate(-20%, -20%) rotate(-45deg);
 }
