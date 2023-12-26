@@ -10,8 +10,8 @@ const board = document.querySelector('.board');
 playButton.style.visibility = 'visible';
 board.style.visibility = 'hidden';
 let score = 0;
-let speed = 1500;
-speedMeter.textContent = speed;
+let speed = 2000;
+speedMeter.textContent = '1';
 
 const sound = new Audio("sprites/smash.mp3");
 
@@ -32,20 +32,29 @@ function run(){
 
     const img = document.createElement('img');
     img.classList.add('mole');
-    img.src = 'sprites/mole.png';
+    img.src = 'sprites/benads.jpg';
 
-    if(score > 70){
-        speed = 500;
+    if(score > 80){
+        speed = 800;
+        img.style['animation-duration'] = '0.8s';
+        speedMeter.textContent = 'MAX';
     } else if(score > 50){
-        speed = 700;
-    } else if(score > 30){
-        speed = 900;
-    }else if(score > 15){
-        speed = 1100;
+        speed = 1000;
+        img.style['animation-duration'] = '1s';
+        speedMeter.textContent = '4';
+    } else if(score > 25){
+        speed = 1200;
+        img.style['animation-duration'] = '1.2s';
+        speedMeter.textContent = '3';
+    }else if(score > 10){
+        speed = 1500;
+        img.style['animation-duration'] = '1.5s';
+        speedMeter.textContent = '2';
     }else if(score> 5){
-        speed = 1300;
+        speed = 1800;
+        img.style['animation-duration'] = '1.8s';
+        speedMeter.textContent = '1';
     }
-    speedMeter.textContent = speed;
 
     img.addEventListener('click', ()=> {
         score++;
@@ -67,7 +76,8 @@ function run(){
     timer = setTimeout(() => {
         hole.removeChild(img);
         console.log(over);
-        gameover();
+        //gameover();
+        run();
     },speed);
     
 }
