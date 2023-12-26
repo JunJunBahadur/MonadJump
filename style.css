@@ -15,7 +15,7 @@ body{
     align-items: center;
     cursor: none;
 }
-.score{
+.score .highscore{
     font-size: 4em;
     margin-bottom: 10px;
 }
