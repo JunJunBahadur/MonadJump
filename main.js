@@ -1,14 +1,17 @@
 const cursor = document.querySelector('.cursor');
 const holes = [...document.querySelectorAll('.hole')];
 const scoreEl = document.querySelector('.score span');
-const speedMeter = document.querySelector('.score p');
+const speedMeter = document.querySelector('.level span');
 const HighScoreEl = document.querySelector('.highscore span');
 const playButton = document.querySelector('.play');
-
 const board = document.querySelector('.board');
+const bg = document.querySelector('.bg');
 
 playButton.style.visibility = 'visible';
 board.style.visibility = 'hidden';
+bg.style.visibility = 'visible';
+bg.style.backgroundImage="url(sprites/level5.png)";
+
 let score = 0;
 let speed = 2000;
 let pause = false;
@@ -22,6 +25,7 @@ const sound = new Audio("sprites/smash.mp3");
 function start(){
     playButton.style.visibility = 'hidden';
     board.style.visibility = 'visible';
+    bg.style.visibility = 'hidden';
     scoreEl.textContent = score;
     run();
 }
@@ -34,45 +38,60 @@ function run(){
     
     const img = document.createElement('img');
     img.classList.add('mole');
+    img.setAttribute("draggable", false);
     img.src = 'sprites/benads.jpg';
     hole.appendChild(img);
     
-    if(score == 80){
-        speed = 800;
-        img.style['animation-duration'] = '0.8s';
-        speedMeter.textContent = 'MAX';
-    } else if(score == 50){
+    
+
+    if(score == 60){
         speed = 1000;
-        img.style['animation-duration'] = '1s';
-        speedMeter.textContent = '4';
-    } else if(score == 25){
+        speedMeter.textContent = 'MAX';
+        bg.style.backgroundImage="url(sprites/level5.png)";
+        hole.removeChild(img);
+        gamepause();
+    } else if(score == 40){
         speed = 1200;
-        img.style['animation-duration'] = '1.2s';
+
+        speedMeter.textContent = '4';
+        bg.style.backgroundImage="url(sprites/level4.png)";
+        hole.removeChild(img);
+        gamepause();
+    } else if(score == 25){
+        speed = 1350;
+
         speedMeter.textContent = '3';
-    }else if(score == 10){
+        bg.style.backgroundImage="url(sprites/level3.png)";
+        hole.removeChild(img);
+        gamepause();
+    }else if(score == 15){
         speed = 1500;
-        img.style['animation-duration'] = '1.5s';
+
         speedMeter.textContent = '2';
+        bg.style.backgroundImage="url(sprites/level2.png)";
+        hole.removeChild(img);
+        gamepause();
     }else if(score == 5){
         speed = 1800;
-        img.style['animation-duration'] = '1.8s';
         speedMeter.textContent = '1';  
+        bg.style.backgroundImage="url(sprites/level1.png)";
         hole.removeChild(img);
-        gamepause();  
+        gamepause();
     }
+    img.style.animationDuration = speed/1000+'s';
     
 
     img.addEventListener('click', ()=> {
         score++;
         sound.play();
         scoreEl.textContent = score;
-        img.src = 'sprites/mole-whacked.png';
+        img.src = 'sprites/benadshit.jpg';
         clearTimeout(timer);
         if(!pause){
             setTimeout(() => {
                 hole.removeChild(img);
                 run();
-            }, 500);
+            }, 100);
         }
     })
 
@@ -81,23 +100,22 @@ function run(){
         timer = setTimeout(() => {
             hole.removeChild(img);
             console.log('rerun');
-            //gameover();
-            run();
+            gameover();
         },speed);
     }
     
 }
-//run()
 
 function gamepause(){
-    board.style.background = 'blue';
+    board.style.visibility = 'hidden';
+    bg.style.visibility = 'visible';
     console.log('At pause');
     pause = false;
     score++;
     setTimeout(()=>{
         board.style.background = '';
         start();
-    },2000)
+    },4000)
 }
 
 function gameover(){
