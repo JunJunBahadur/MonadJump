@@ -6,6 +6,11 @@ const HighScoreEl = document.querySelector('.highscore span');
 const playButton = document.querySelector('.play');
 const board = document.querySelector('.board');
 const bg = document.querySelector('.bg');
+const itemSet = (localStorage.getItem('hscore') !== null);
+if(!itemSet) {
+    localStorage.setItem("hscore", 0);
+}
+setScore();
 
 playButton.style.visibility = 'visible';
 board.style.visibility = 'hidden';
@@ -15,12 +20,15 @@ bg.style.backgroundImage="url(sprites/level5.png)";
 let score = 0;
 let speed = 2000;
 let pause = false;
-let level = 0;
+
 let nads = 'sprites/benads.jpg';
 speedMeter.textContent = '0';
 
 const sound = new Audio("sprites/smash.mp3");
 
+function setScore() {
+    HighScoreEl.textContent=localStorage.getItem('hscore');
+}
 
 function start(){
     playButton.style.visibility = 'hidden';
@@ -42,7 +50,7 @@ function run(){
     img.src = 'sprites/benads.jpg';
     hole.appendChild(img);
     
-    
+
 
     if(score == 60){
         speed = 1000;
@@ -99,7 +107,6 @@ function run(){
     if(!pause){
         timer = setTimeout(() => {
             hole.removeChild(img);
-            console.log('rerun');
             gameover();
         },speed);
     }
@@ -109,7 +116,6 @@ function run(){
 function gamepause(){
     board.style.visibility = 'hidden';
     bg.style.visibility = 'visible';
-    console.log('At pause');
     pause = false;
     score++;
     setTimeout(()=>{
@@ -121,11 +127,17 @@ function gamepause(){
 function gameover(){
     playButton.style.visibility = 'visible';
     board.style.visibility = 'hidden';
+    bg.style.visibility = 'visible';
+    bg.style.backgroundImage="url(sprites/over.png)";
+
+    speedMeter.textContent = '0';
     curHS = HighScoreEl.textContent;
     if(curHS<score){
         HighScoreEl.textContent = score;
+        localStorage.setItem("hscore", score);
     }
     score = 0;
+    
     speed = 2000;
 }
 

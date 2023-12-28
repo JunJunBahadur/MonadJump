@@ -14,9 +14,9 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    cursor: none;
 }
 /*
-cursor: none;
 
 */
 
@@ -100,13 +100,6 @@ cursor: none;
     animation: rise ease-in-out;
     animation-duration: 2s;
 
-    user-drag: none;
-    -webkit-user-drag: none;
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-
 }
 
 @keyframes rise {
@@ -121,7 +114,7 @@ cursor: none;
     }
     
 }
-/*
+
 .cursor{
     height: 110px;
     width: 100px;
@@ -134,7 +127,7 @@ cursor: none;
     transition: transform .1s;
     pointer-events: none;
 }
-*/
+
 .cursor.active{
     transform: translate(-20%, -20%) rotate(-45deg);
 }
