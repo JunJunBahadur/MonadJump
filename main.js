@@ -12,6 +12,8 @@ board.style.visibility = 'hidden';
 let score = 0;
 let speed = 2000;
 let pause = false;
+let level = 0;
+let nads = 'sprites/benads.jpg';
 speedMeter.textContent = '0';
 
 const sound = new Audio("sprites/smash.mp3");
@@ -26,7 +28,6 @@ function start(){
 
 function run(){
     
-    
     const i = Math.floor(Math.random()*holes.length);
     const hole = holes[i];
     let timer = null;
@@ -34,24 +35,25 @@ function run(){
     const img = document.createElement('img');
     img.classList.add('mole');
     img.src = 'sprites/benads.jpg';
+    hole.appendChild(img);
     
-    if(score > 80){
+    if(score == 80){
         speed = 800;
         img.style['animation-duration'] = '0.8s';
         speedMeter.textContent = 'MAX';
-    } else if(score > 50){
+    } else if(score == 50){
         speed = 1000;
         img.style['animation-duration'] = '1s';
         speedMeter.textContent = '4';
-    } else if(score > 25){
+    } else if(score == 25){
         speed = 1200;
         img.style['animation-duration'] = '1.2s';
         speedMeter.textContent = '3';
-    }else if(score > 10){
+    }else if(score == 10){
         speed = 1500;
         img.style['animation-duration'] = '1.5s';
         speedMeter.textContent = '2';
-    }else if(score> 5){
+    }else if(score == 5){
         speed = 1800;
         img.style['animation-duration'] = '1.8s';
         speedMeter.textContent = '1';  
@@ -76,9 +78,9 @@ function run(){
 
     
     if(!pause){
-        hole.appendChild(img);
         timer = setTimeout(() => {
             hole.removeChild(img);
+            console.log('rerun');
             //gameover();
             run();
         },speed);
@@ -89,7 +91,13 @@ function run(){
 
 function gamepause(){
     board.style.background = 'blue';
+    console.log('At pause');
     pause = false;
+    score++;
+    setTimeout(()=>{
+        board.style.background = '';
+        start();
+    },2000)
 }
 
 function gameover(){
@@ -100,7 +108,7 @@ function gameover(){
         HighScoreEl.textContent = score;
     }
     score = 0;
-    speed = 1500;
+    speed = 2000;
 }
 
 window.addEventListener('mousemove', e=> {
