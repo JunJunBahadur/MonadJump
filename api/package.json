@@ -3,5 +3,18 @@
     "express": "^4.18.2",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.4"
-  }
+  },
+  "name": "api",
+  "version": "1.0.0",
+  "main": "db.js",
+  "engines": {
+    "node": "19.x"
+  },
+  "scripts": {
+    "start": "node db.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
